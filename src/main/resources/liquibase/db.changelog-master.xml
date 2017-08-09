@@ -14,13 +14,20 @@
     <changeSet id="1" author="ay.dyomin">
 
         <createTable tableName="Users">
+
             <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-
-            <column name="first_name" type="varchar(40)">
+            <column name="first_name" type="varchar(40)"/>
+            <column name="last_name" type="varchar(40)">
+                <constraints nullable="false"/>
             </column>
-
+            <column name="login" type="varchar(40)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="pass" type="varchar(40)">
+                <constraints nullable="false"/>
+            </column>
             <!--todo доделать остальные таблицы-->
 
         </createTable>
