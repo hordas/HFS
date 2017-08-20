@@ -13,8 +13,9 @@
 
     <changeSet id="1" author="ay.dyomin">
 
-        <createTable tableName="Users">
+        <!--==================== Users =======================-->
 
+        <createTable tableName="Users">
             <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -28,9 +29,74 @@
             <column name="pass" type="varchar(40)">
                 <constraints nullable="false"/>
             </column>
-            <!--todo доделать остальные таблицы-->
-
         </createTable>
+
+        <!--==================== Directories =======================-->
+
+        <createTable tableName="Directories">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_id" type="int">
+                <constraints nullable="false" foreignKeyName="directories_user_id_fk" references="users(id)"/>
+            </column>
+            <column name="name" type="varchar(40)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="creation_date" type="datetime"/>
+        </createTable>
+
+        <!--==================== Photos =======================-->
+
+        <createTable tableName="Photos">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_id" type="int">
+                <constraints nullable="false" foreignKeyName="photos_user_id_fk" references="users(id)"/>
+            </column>
+            <column name="dir_id" type="int">
+                <constraints nullable="false" foreignKeyName="photos_dir_id_fk" references="directories(id)"/>
+            </column>
+            <column name="img_url" type="tinytext">
+                <constraints nullable="false"/>
+            </column>
+            <column name="img_description" type="tinytext"/>
+            <column name="creation_date" type="datetime"/>
+        </createTable>
+
+        <!--======================= Likes =======================-->
+
+        <createTable tableName="Likes">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_id" type="int">
+                <constraints nullable="false" foreignKeyName="likes_photo_id_fk" references="photos(id)"/>
+            </column>
+            <column name="photo_id" type="int">
+                <constraints nullable="false" foreignKeyName="likes_user_id_fk" references="users(id)"/>
+            </column>
+        </createTable>
+
+        <!--==================== Comments =======================-->
+
+        <createTable tableName="Comments">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_id" type="int">
+                <constraints nullable="false" foreignKeyName="comments_user_id_fk" references="users(id)"/>
+            </column>
+            <column name="photo_id" type="int">
+                <constraints nullable="false" foreignKeyName="comments_photo_id_fk" references="photos(id)"/>
+            </column>
+            <column name="creation_date" type="datetime"/>
+            <column name="text" type="text">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
     </changeSet>
 
 </databaseChangeLog>
